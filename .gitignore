@@ -1,0 +1,5 @@
+*.idea
+
+QQPlayer/
+JS/source
+*.DS_Store

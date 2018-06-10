@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  .clock{
+    width: 600px;
+    height: 600px;
+    margin: 40px auto;
+    background: url('images/clock.jpg') no-repeat center center;
+    position: relative;
+  }
+  .hour,.minute,.seconds{
+    width: 30px;
+    height: 600px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -15px;
+  }
+  .hour{
+    background: url('images/hour.png') no-repeat center center;
+  }
+  .minute{
+    background: url('images/minute.png') no-repeat center center;
+  }
+  .seconds{
+    background: url('images/second.png') no-repeat center center;
+  }
+  </style>
+</head>
+<body>
+  <div class="clock">
+    <div class="hour"></div>
+    <div class="minute"></div>
+    <div class="seconds"></div>
+  </div>
+
+  <script>
+    var hour = document.querySelector('.hour');
+    var minute = document.querySelector('.minute');
+    var seconds = document.querySelector('.seconds');
+
+    setInterval(function(){
+      var date = new Date;
+      // 获取总的毫秒时间
+      var milliS = date.getMilliseconds();
+      var second = date.getSeconds() + milliS / 1000;
+      var minutes = date.getMinutes() + second / 60;
+      // 超过12小时为一圈 所有对 12去余
+      var hours = date.getHours() % 12 + minutes / 60;
+      // 圆盘360°
+      hour.style.transform = 'rotate('+ hours * 30 +'deg)';     //  hour * (360° / 12)
+      minute.style.transform = 'rotate('+ minutes * 6 +'deg)';  //  minute * (360° / 60)
+      seconds.style.transform = 'rotate('+ second * 6 +'deg)';  //  seconds * (360° / 60)
+
+    },10);
+  </script>
+</body>
+</html>

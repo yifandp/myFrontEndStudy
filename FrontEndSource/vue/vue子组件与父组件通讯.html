@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
+</head>
+<body>
+<div class="app">
+    <my-btn @total="totalCunterEle()"></my-btn>
+    <my-btn @total="totalCunterEle()"></my-btn>
+    <my-btn @total="totalCunterEle()"></my-btn>
+    <my-btn @total="totalCunterEle()"></my-btn>
+    <my-btn @total="totalCunterEle()"></my-btn>
+    <my-btn @total="totalCunterEle()"></my-btn>
+    <p>总共点击了{{totalCunter}}次</p>
+</div>
+<template id="myBtn">
+    <button @click="total()">点击了{{cunter}}次</button>
+</template>
+
+<script>
+    Vue.component('my-btn',{
+        template:'#myBtn',
+        data(){
+            return {
+                cunter : 0
+            }
+        },
+        methods: {
+            total(){
+                this.cunter += 1;
+                this.$emit('total');
+            }
+        }
+    })
+
+
+    new Vue({
+        el: '.app',
+        data:{
+            totalCunter : 0
+        },
+        methods: {
+            totalCunterEle(){
+                this.totalCunter += 1;
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

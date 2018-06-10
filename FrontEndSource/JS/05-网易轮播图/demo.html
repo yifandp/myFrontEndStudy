@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .slide{
+            width: 310px;
+            height: 240px;
+            margin: 100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .slide .slide-layout{
+            width: 310px;
+            height: 220px;
+        }
+        .slide .slide-main{
+            width: 620px;
+            height: 220px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .slide .slide-pic{
+            width: 310px;
+            height: 220px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .slide .slide-pic img{
+            width: 310px;
+        }
+
+        .control{
+            height: 20px;
+            text-align: center;
+        }
+        .contr-prev,
+        .contr-next{
+            width: 20px;
+            height: 34px;
+            background: url("images/icon.png") no-repeat;
+            position: absolute;
+            top: 50%;
+            margin-top: -35px;
+            cursor: pointer;
+        }
+        .contr-next{
+            right: 0;
+            background-position: -9px -45px;
+        }
+        .contr-prev{
+            left: 0;
+        }
+        .contr-icon{
+            display: inline-block;
+            width: 24px;
+            height: 4px;
+            background: #ccc;
+            margin: 8px;
+            cursor: pointer;
+            overflow: hidden;
+            text-indent: -999rem;
+        }
+        .current{
+            background: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="slide-layout">
+            <div class="slide-main">
+                <div class="slide-pic">
+                    <a href="#"><img src="images/1.jpeg" alt=""></a>
+                </div>
+                <div class="slide-pic">
+                    <a href="#"><img src="images/2.jpeg" alt=""></a>
+                </div>
+                <div class="slide-pic">
+                    <a href="#"><img src="images/3.jpeg" alt=""></a>
+                </div>
+                <div class="slide-pic">
+                    <a href="#"><img src="images/4.jpeg" alt=""></a>
+                </div>
+                <div class="slide-pic">
+                    <a href="#"><img src="images/5.jpeg" alt=""></a>
+                </div>
+                <div class="slide-pic">
+                    <a href="#"><img src="images/6.jpeg" alt=""></a>
+                </div>
+            </div>
+        </div>
+        <div class="control">
+            <div class="contr-prev"></div>
+            <div class="contr-next"></div>
+        </div>
+    </div>
+
+    <script>
+        var oSlide = document.querySelector('.slide');
+        var oSlideMain = document.querySelector('.slide-main');
+        var aPic = oSlideMain.children;
+        var oControl = document.querySelector('.control');
+
+        // 创建交互按钮
+        for(var i = 0; i < aPic.length; i++){
+            var span = document.createElement('span');
+            span.className = 'contr-icon';
+            span.innerText = aPic.length - i -1;
+            oControl.insertBefore(span, oControl.children[1]);
+        }
+        // 为第一个交互点添加高亮
+        var aContr = oControl.children;
+        aContr[1].className = 'contr-icon current';
+
+        // 设置图片位置
+        var viewW = oSlide.offsetWidth;
+        for(var i = 1; i < aPic.length; i++){
+            aPic[i].style.left = viewW + 'px';
+        }
+
+        // 添加样式
+        var iNow = 0;
+        for(var i = 0; i < aContr.length; i++){
+            aContr[i].onclick = function(){
+                if(this.className === 'contr-prev'){
+                    /*
+                     1.让当前可视区图片移动到左侧
+                     2.让下一张图片快速移动到右侧
+                     3.做动画到可视区
+                      */
+                    buffer(aPic[iNow], {'left': - viewW});
+                    iNow--;
+
+                    if(iNow < 0){
+                        iNow = aPic.length - 1;
+                    }
+
+                    aPic[iNow].style.left = viewW + 'px';
+                    buffer(aPic[iNow], {'left': 0});
+
+                }else if(this.className === 'contr-next'){
+                    /*
+                     1.让当前可视区图片移动到右侧
+                     2.让下一张图片快速移动到左侧
+                     3.做动画到可视区
+                      */
+                    buffer(aPic[iNow], {'left': viewW});
+                    iNow++;
+
+                    if(iNow > aPic.length - 1){
+                        iNow = 0;
+                    }
+
+                    aPic[iNow].style.left = -viewW + 'px';
+                    buffer(aPic[iNow], {'left': 0});
+                }else{
+                    var _index = parseInt(this.innerText);
+                    if(_index > iNow){
+
+                        buffer(aPic[iNow], {'left': -viewW});
+                        aPic[_index].style.left = viewW + 'px';
+                        iNow = _index;
+                        buffer(aPic[iNow], {'left': 0});
+                    }else if(_index < iNow){
+
+                        buffer(aPic[iNow], {'left': viewW});
+                        aPic[_index].style.left = -viewW + 'px';
+                        iNow = _index
+                        buffer(aPic[iNow], {'left': 0});
+                    }
+
+                }
+                changeIndex();
+            }
+        }
+
+        function changeIndex(){
+            for(var i = 1; i < aContr.length-1; i++){
+                aContr[i].className = 'contr-icon';
+            }
+            aContr[iNow + 1].className = 'contr-icon current';
+        }
+
+
+
+        function buffer(obj,json,fn) {
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function () {
+                var flag = true;
+                var iCurr = 0;
+                for(var attr in json){
+                    if(attr == 'opacity'){
+                        iCurr = Math.round(parseFloat(getStyle(obj,attr)) * 100) || 0;
+                    }else{
+                        iCurr = parseInt(getStyle(obj,attr)) || 0;
+                    }
+
+                    var iSpeed = (json[attr] - iCurr) / 6;
+                    iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+
+                    if(iCurr != json[attr]){
+                        flag = false;
+                    }
+
+                    if(attr == 'opacity'){
+                        obj.style.filter = 'alpha(opacity: '+ (iCurr + iSpeed) +')';
+                        obj.style.opacity = (iCurr + iSpeed ) / 100;
+                    }else if(attr == 'zIndex'){
+                        obj.style.zIndex = json[attr];
+                    }else{
+                        obj.style[attr] = iCurr + iSpeed + 'px';
+                    }
+                }
+
+                if(flag){
+                    clearInterval(obj.timer);
+                    if(fn){
+                        fn.call(obj);
+                    }
+                }
+
+            },30)
+        }
+
+        function getStyle(obj,attr){
+            return obj.currentStyle ? obj.currentStyle[attr] : window.getComputedStyle(obj,null)[attr];
+        }
+    </script>
+</body>
+</html>

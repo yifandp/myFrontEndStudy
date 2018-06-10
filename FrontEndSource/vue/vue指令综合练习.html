@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .app{
+            width: 600px;
+            margin: 100px auto;
+        }
+        fieldset{
+            padding: 20px;
+            border: 1px solid orange;
+        }
+        fieldset input{
+            width: 200px;
+            height: 10px;
+            padding: 10px;
+        }
+        fieldset div{
+            margin: 10px 0;
+        }
+        fieldset button{
+            width: 150px;
+            height: 30px;
+            border-radius: 4px;
+        }
+        table{
+            margin-top: 20px;
+            width: 100%;
+            border: 2px solid orange;
+            text-align: center;
+            border-collapse: collapse;
+            vertical-align: middle;
+        }
+        thead{
+            background: orange;
+        }
+        table tr{
+            line-height: 30px;
+            border-bottom: 1px solid orange;
+        }
+        table button{
+            width: 60px;
+            height: 24px;
+            border-radius: 4px;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
+</head>
+<body>
+    <div class="app">
+        <fieldset>
+            <legend>添加用户</legend>
+            <div>
+                <span>姓名：</span>
+                <input v-model="newStudent.name" type="text" placeholde="请输入姓名">
+            </div>
+            <div>
+                <span>年龄：</span>
+                <input v-model="newStudent.age" type="text" placeholde="请输入年龄">
+            </div>
+            <div>
+                <span>性别：</span>
+                <select v-model="newStudent.sex">
+                    <option  value="男">男</option>
+                    <option  value="女">女</option>
+                </select>
+            </div>
+            <div>
+                <span>手机：</span>
+                <input v-model="newStudent.phone" type="text" placeholde="请输入手机号">
+            </div>
+            <button @click="newCreateStudent">创建新用户</button>
+        </fieldset>
+
+        <div class="table-box">
+            <table>
+                <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>年龄</th>
+                        <th>性别</th>
+                        <th>手机</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item,index) in person">
+                        <td>{{item.name}}</td>
+                        <td>{{item.age}}</td>
+                        <td>{{item.sex}}</td>
+                        <td>{{item.phone}}</td>
+                        <td><button @click="delStudentMesg(index)">删除</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        let mv = new Vue({
+            el : '.app',
+            data: {
+                person: [
+                    {name: 'Tom', age: 18, sex: '男', phone: 12993489382},
+                    {name: 'Alex', age: 18, sex: '女', phone: 14389384908},
+                    {name: 'Bob', age: 18, sex: '女', phone: 78679898892},
+                    {name: 'Jery', age: 18, sex: '男', phone: 78672388234},
+                    {name: 'loser', age: 18, sex: '男', phone: 17823634671}
+                ],
+                newStudent: {name: '', age: 0 , sex: '男',  phone: ''}
+            },
+            methods: {
+                newCreateStudent(){
+                    if(this.newStudent.name == ''){
+                        alert('姓名不能为空');
+                        return;
+                    }
+
+                    if(this.newStudent.age <= 0){
+                        alert('年龄必须大于0');
+                        return;
+                    }
+
+                    if(this.newStudent.phone == ''){
+                        alert('电话不能为空');
+                        return;
+                    }
+                    // 创建数据
+                    this.person.push(this.newStudent);
+                    // 清空数据
+                    this.newStudent = {name: '', age: 0 , sex: '男',  phone: ''}
+                },
+
+                delStudentMesg(index){
+                    this.person.splice(index,1);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

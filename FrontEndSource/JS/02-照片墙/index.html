@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/Underscore-min.js"></script>
+  <style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  html,body{
+    width: 100%;
+    height: 100%;
+  }
+  #pic-box{
+    position: relative;
+    height: 100%;
+  }
+  li{
+    list-style: none;
+    width: 250px;
+    height: 360px;
+    box-shadow: 0 0 10px #000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 1s;
+  }
+  li.current{
+    top: 50% !important;
+    left: 50% !important;
+    transform: rotate(0deg) translate(-50%, -50%) scale(1.5,1.5) !important;
+    z-index: 99;
+  }
+  </style>
+</head>
+<body>
+  <ul id="pic-box">
+
+  </ul>
+  <script type="text/javascript">
+    var oPs = document.getElementById('pic-box');
+
+    // 创建图片列表
+    for(var i = 0; i < 10; i++){
+      // 创建图片框
+      var aLi = document.createElement('li');
+      oPs.appendChild(aLi);
+      // 创建图片
+      var aImg = document.createElement('img');
+      aImg.src = 'images/pic'+ (i + 1) +'.jpg';
+
+      aLi.appendChild(aImg);
+    }
+
+    var sLi = oPs.children;
+    var winW = document.documentElement.clientWidth - 250;
+    var winH = document.documentElement.clientHeight - 360;
+    // 创建随机位置
+    for(var j = 0; j < sLi.length; j++){
+      sLi[j].style.top = _.random(0,winH) + 'px';
+      sLi[j].style.left = _.random(0,winW) + 'px';
+      sLi[j].style.transform = 'rotate('+ _.random(0,360) +'deg)';
+
+      // 绑定点击事件
+      sLi[j].onclick = function() {
+        for(var i = 0; i < sLi.length; i++ ){
+          sLi[i].className = '';
+        }
+        this.className = 'current';
+      }
+    }
+
+  </script>
+</body>
+</html>

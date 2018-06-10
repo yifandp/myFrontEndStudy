@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  .slide{
+    width: 1200px;
+    height: 460px;
+    margin: 100px auto;
+    position: relative;
+  }
+  .slide-pic li{
+    list-style: none;
+    position: absolute;
+    top: 0;
+    left: 100px;
+  }
+  .slide-pic li img{
+    width: 100%;
+  }
+  .control{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    margin-top: -56px;
+    z-index: 99;
+    opacity: 0;
+  }
+  .control .contr-prev,
+  .control .contr-next{
+    display: block;
+    width: 76px;
+    height: 112px;
+    cursor: pointer;
+  }
+  .control .contr-prev{
+    background: url(images/prev.png) no-repeat center center;
+    float: left;
+  }
+  .control .contr-next{
+    background: url(images/next.png) no-repeat center center;
+    float: right;
+  }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <ul class="slide-pic">
+      <li><img src="images/slidepic1.jpg" alt=""></li>
+      <li><img src="images/slidepic2.jpg" alt=""></li>
+      <li><img src="images/slidepic3.jpg" alt=""></li>
+      <li><img src="images/slidepic4.jpg" alt=""></li>
+      <li><img src="images/slidepic5.jpg" alt=""></li>
+    </ul>
+    <div class="control">
+      <span class="contr-prev"></span>
+      <span class="contr-next"></span>
+    </div>
+  </div>
+
+  <script>
+    var oSlide = document.querySelector('.slide');
+    var oSlidePic = document.querySelector('.slide-pic');
+    var aLi = oSlidePic.children;
+    var oControl = document.querySelector('.control');
+    var aSpan = oControl.children;
+
+    oSlide.onmouseover = function(){
+        buffer(oControl,{'opacity': 100})
+    }
+    oSlide.onmouseout = function(){
+        buffer(oControl,{'opacity': 0})
+    }
+
+    // 定位
+    var json = [
+        {   //  1
+            width:400,
+            top:20,
+            left:50,
+            opacity:20,
+            zIndex:2
+        },
+        {  // 2
+            width:600,
+            top:70,
+            left:0,
+            opacity:80,
+            zIndex:3
+        },
+        {   // 3
+            width:800,
+            top:100,
+            left:200,
+            opacity:100,
+            zIndex:4
+        },
+        {  // 4
+            width:600,
+            top:70,
+            left:600,
+            opacity:80,
+            zIndex:3
+        },
+        {   //5
+            width:400,
+            top:20,
+            left:750,
+            opacity:20,
+            zIndex:2
+        }
+    ];
+
+    for(var i = 0; i < aLi.length; i++){
+        buffer(aLi[i],json[i]);
+    }
+
+    for(var i = 0; i < aSpan.length; i++ ){
+        aSpan[i].onclick = function(){
+          // 操作数组
+          if(this.className === 'contr-prev'){
+            json.push(json.shift());
+          }else if(this.className === 'contr-next'){
+            json.unshift(json.pop());
+          }
+
+          for(var i = 0; i < aLi.length; i++){
+              buffer(aLi[i],json[i]);
+          }
+
+        }
+    }
+
+
+
+    function buffer(obj,json,fn){
+      clearInterval(obj.timer);
+      obj.timer = setInterval(function(){
+          var flag = true;
+          for(var attr in json){
+            var iCurr = 0;
+            if(attr == 'opacity'){
+              iCurr = Math.round(parseFloat(getStyle(obj,attr)) * 100) || 0;
+            }else{
+              iCurr = parseInt(getStyle(obj,attr)) || 0;
+            }
+
+            var iSpeed = (json[attr] - iCurr) / 8;
+            iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+
+            if(iCurr != json[attr]){
+              flag = false;
+            }
+
+            if(attr == 'opacity'){
+              obj.style.filter = 'alpha(opacity:'+ (iSpeed + iCurr) +')';
+              obj.style.opacity = (iSpeed + iCurr) / 100;
+            }else if(attr == 'zIndex'){
+              obj.style.zIndex = json[attr];
+            }else{
+              obj.style[attr] = iSpeed + iCurr + 'px';
+            }
+          }
+
+          if(flag){
+            clearInterval(obj.timer);
+            if(fn){
+              fn.call(obj);
+            }
+          }
+      },30);
+    }
+
+    function getStyle(obj,attr){
+      return obj.currentStyle ? obj.currentStyle[attr] : window.getComputedStyle(obj,null)[attr];
+    }
+
+  </script>
+</body>
+</html>

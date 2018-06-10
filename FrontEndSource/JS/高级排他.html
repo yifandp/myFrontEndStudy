@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  *{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  li{
+    list-style: none;
+    height: 20px;
+    border: 1px solid #ccc
+  }
+  .current{
+    background: #9f0;
+  }
+  .left{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: #ccc;
+    text-align: center;
+    line-height: 50px;
+    transform: rotateY(180deg);
+  }
+  .right{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: #ccc;
+    text-align: center;
+    line-height: 50px;
+  }
+  </style>
+</head>
+<body>
+  <ul>
+    <li class="current"></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+
+  <div class="left"> → </div><br>
+  <div class="right"> → </div>
+  <script>
+    var ul = document.querySelector('ul');
+    var aLi = ul.children;
+
+    var lastOne = 0;
+    for(var i = 0; i < aLi.length; i++){
+      (function(index){
+        aLi[index].onmouseover = function(){
+
+            aLi[lastOne].className = '';
+            this.className = 'current';
+            lastOne = index;
+        }
+      })(i)
+    }
+
+  var l = document.querySelector('.left');
+  var r = document.querySelector('.right')
+
+  l.onclick = move(-50);
+  r.onclick = move(50);
+
+  function move(speed){
+    var num = 0;
+    return function(){
+      num += speed;
+      this.style.marginLeft = num + 'px';
+    }
+  }
+
+  </script>
+
+
+</body>
+</html>

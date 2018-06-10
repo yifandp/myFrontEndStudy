@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
+</head>
+<body>
+<div class="app">
+    <item-list></item-list>
+</div>
+
+<template id="template">
+    <div>
+        <div>
+            <ul>
+                <li v-for="(item,index) in items">{{item}}</li>
+            </ul>
+        </div>
+    </div>
+</template>
+
+<script>
+    Vue.component('item-list',{
+        template: '#template',
+        data: function (){
+            return {
+                items: ['周一','周二','周三','周四','周五','周六','周日']
+            }
+        }
+    });
+
+    new Vue({
+        el: '.app'
+    })
+</script>
+</body>
+</html>

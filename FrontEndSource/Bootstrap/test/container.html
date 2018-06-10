@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .container{
+            height: 40px;
+            margin: 0 auto;
+            background: #0396FF;
+        }
+
+        @media screen and (min-width: 1200px) {
+            .container{
+                width: 1170px;
+            }
+        }
+
+        @media screen and (min-width: 992px) and (max-width: 1200px) {
+            .container{
+                width: 970px;
+            }
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 992px) {
+            .container{
+                width: 750px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .container{
+                width: 100%;
+            }
+        }
+        .pic{
+            width: 960px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .pic img{
+            margin: 0 -100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container"></div>
+<div class="pic">
+    <img src="img/slide_01_2000x410.jpg" alt="">
+</div>
+
+<script>
+    /*
+    window.addEventListener('load',function () {
+        let container = document.querySelector('.container');
+        let windW = 0;
+
+        resize();
+
+        window.addEventListener('resize',resize);
+
+        function resize(){
+            windW = document.documentElement.clientWidth;
+            if(windW > 1200){
+                container.style.width = 1170 + 'px';
+            }else if(windW > 992){
+                container.style.width = 970 + 'px';
+            }else if(windW > 768){
+                container.style.width = 750 + 'px';
+            }else{
+                container.style.width = 100 + '%';
+            }
+        }
+    })
+    */
+</script>
+</body>
+</html>

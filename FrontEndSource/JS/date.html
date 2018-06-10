@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h2 style="color: #666"></h2>
+  <script>
+    var currentDate = new Date();
+    var nextDate = new Date('2018/9/30 18:00:00');
+
+    // 获取时间戳
+    var currentDate = currentDate.getTime();
+    var nextDate = nextDate.getTime();
+    // 剩余时间
+    var allTime = nextDate - currentDate;
+    // 转化为秒
+    var allSeconds = allTime / 1000;
+
+    // 天
+    var day = parseInt(allSeconds / 3600 / 24);
+    // 时
+    var hour = parseInt(allSeconds / 3600 % 24);
+    // 分
+    var min = parseInt(allSeconds / 60 % 60);
+    // 秒
+    var seconds = parseInt(allSeconds % 60);
+
+    document.getElementsByTagName('h2')[0].innerHTML = getFormat(day) + '天' + getFormat(hour) + '时'+ getFormat(min) +'分'+ getFormat(seconds) +'秒';
+
+    function getFormat(num){
+      return num < 10 ? 0 + num : num;
+    }
+  </script>
+</body>
+</html>

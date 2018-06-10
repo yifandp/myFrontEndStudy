@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="main"></div>
+  <script>
+
+    function Rect(option){
+      this._init(option);
+    }
+
+    Rect.prototype = {
+      _init: function(option){
+        this.parentId = option.parentId;
+        this.left= option.left || 100;
+        this.top= option.top || 100;
+
+        this.width= option.width || 100;
+        this.height= option.height || 100;
+        this.border= option.border || 0;
+
+        this.backgroundColor= option.backgroundColor || 'blue';
+        this.borderRadius= option.borderRadius || 0;
+      },
+      render: function(){
+          var parent = document.getElementById(this.parentId);
+          var children = document.createElement('div');
+          children.style.position = 'absolute';
+          children.style.left = this.left + 'px';
+          children.style.top = this.top + 'px';
+          children.style.width = this.width + 'px';
+          children.style.height = this.height + 'px';
+          children.style.border = this.border;
+          children.style.backgroundColor = this.backgroundColor;
+          children.style.borderRadius = this.borderRadius + 'px';
+
+          parent.appendChild(children);
+      }
+    }
+
+    var rect = new Rect({
+      parentId: 'main',
+      left: 200,
+      top: 100,
+      width: 200,
+      height: 40,
+      border: '4px solid #d0d0d0',
+      backgroundColor: '#f60',
+      borderRadius: 8
+    });
+
+    rect.render();
+  </script>
+</body>
+</html>

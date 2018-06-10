@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  body{
+    background: #000;
+    position: relative;
+  }
+  span{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    background: url('images/star.png') no-repeat;
+    background-size: 100% 100%;
+    animation: flash 1s linear infinite alternate
+  }
+  @keyframes flash {
+    0%{
+      opacity: 0;
+    }
+    100%{
+      opacity: 1;
+    }
+  }
+
+  span:hover{
+    transform: scale(3,3) rotate(180deg) !important;
+    transition: all 1s linear;
+  }
+  </style>
+</head>
+<body>
+  <script>
+    var winW = document.documentElement.clientWidth;
+    var winH = document.documentElement.clientHeight;
+
+    for(var i = 0;  i < 150; i++){
+      // 创建星星
+      var span = document.createElement('span');
+      document.body.appendChild(span);
+      // 创建随机位置
+      var x = parseInt(Math.random() * winW);
+      var y = parseInt(Math.random() * winH);
+      span.style.left = x + 'px';
+      span.style.top = y + 'px';
+      // 随机大小
+      var scale = parseInt(Math.random() * 1.5);
+      span.style.transform = 'scale('+ scale +','+ scale +')';
+      // 随机闪烁
+      var twinkle = parseInt(Math.random() * 1.5);
+      span.style.animationDelay = twinkle + 's';
+    }
+  </script>
+</body>
+</html>

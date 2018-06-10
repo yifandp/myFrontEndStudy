@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var i = 10;
+
+    function fn() {
+      i--;
+      // 传递的结束条件
+      if(i >= 0){
+        console.log('从前有座山，山上有座庙'+ i);
+        // 递归调用
+        fn();
+      }
+    }
+
+    fn();
+  </script>
+</body>
+</html>

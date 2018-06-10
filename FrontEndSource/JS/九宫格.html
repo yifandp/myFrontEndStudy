@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  *{
+    margin:0;
+    padding: 0;
+  }
+  .top{
+    padding: 20px;
+  }
+  .bottom{
+    position: relative;
+  }
+  .box{
+    width: 220px;
+    height: 360px;
+    margin: 0 15px 15px;
+    border: 1px solid #e8e8e8;
+  }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <button>3列</button>
+    <button>4列</button>
+    <button>5列</button>
+  </div>
+  <div class="bottom">
+    <div class="box">1</div>
+    <div class="box">2</div>
+    <div class="box">3</div>
+    <div class="box">4</div>
+    <div class="box">5</div>
+    <div class="box">6</div>
+    <div class="box">7</div>
+    <div class="box">8</div>
+    <div class="box">9</div>
+    <div class="box">10</div>
+    <div class="box">11</div>
+    <div class="box">12</div>
+    <div class="box">13</div>
+    <div class="box">14</div>
+    <div class="box">15</div>
+    <div class="box">16</div>
+    <div class="box">17</div>
+    <div class="box">18</div>
+    <div class="box">19</div>
+    <div class="box">20</div>
+  </div>
+
+  <script>
+    window.onload = function(){
+      var Top = document.querySelector('.top');
+      var Bottom = document.querySelector('.bottom');
+      btn = Top.children;
+
+      btn[0].onclick = function(){
+        RowCol(Bottom,3);
+      }
+      btn[1].onclick = function(){
+        RowCol(Bottom,4);
+      }
+      btn[2].onclick = function(){
+        RowCol(Bottom,5);
+      }
+
+      function RowCol(parentNode,allCol) {
+        var boxW = 220, boxH = 360, XYmargin = 15;
+        for(var i = 0; i < parentNode.children.length; i++){
+          // 算出每个元素在行中所在位置   parseInt( 元素索引值  / 总列数) 得出 行数
+          // 算出每个元素在列中所在位置   parseInt( 元素索引值  % 总列数) 得出 列数
+          var row = parseInt(i / allCol);
+          var col = parseInt(i % allCol);
+          // console.log('当前元素所在行数' + row +' ; '+ '当前元素所在列数'+ col);
+          parentNode.children[i].style.position = 'absolute';
+          parentNode.children[i].style.left = col * (boxW + XYmargin) + 'px';
+          parentNode.children[i].style.top = row * (boxH + XYmargin) + 'px';
+        }
+      }
+    }
+  </script>
+</body>
+</html>

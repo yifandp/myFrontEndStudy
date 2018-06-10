@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vue-router/2.7.0/vue-router.min.js"></script>
+</head>
+<body style="background: #e8e8e8">
+<div id="app">
+    <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+            <h1>Vue Router</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2 col-xs-offset-2">
+            <div class="list-group">
+                <router-link class="list-group-item" :to="{name: 'h5'}">h5</router-link>
+                <router-link class="list-group-item" :to="{name: 'java'}">java</router-link>
+                <router-link class="list-group-item" :to="{name: 'python'}">python</router-link>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel">
+                <div class="panel-body">
+                    <router-view></router-view>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<template id="Html5">
+    <div>
+        <h2>H5 大前端必学的课程</h2>
+        <s>...</s>
+        <div>
+            <ul class="nav nav-tabs">
+                <router-link to='/h5/basic'>基础班</router-link>
+                <router-link to='/h5/big'>大神班</router-link>
+            </ul>
+            <div class="nav-content">
+                <router-view></router-view>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="basic">
+    <div>
+        <h3>基础班</h3>
+        <p>快速入门的Html5</p>
+    </div>
+</template>
+
+<template id="big">
+    <div>
+        <h3>大神班</h3>
+        <p>进阶到完全熟悉</p>
+    </div>
+</template>
+
+<template id="Java">
+    <div>
+        <h2>java 世界上最好的语言 (本人不赞同)</h2>
+        <s>...</s>
+    </div>
+</template>
+
+<template id="Python">
+    <div>
+        <h2>Python 面对大数据人工智能的时代 必学的一门语言</h2>
+        <s>...</s>
+    </div>
+</template>
+
+
+<script>
+    // 实例化组件
+    const h5 = Vue.extend({
+        template: "#Html5"
+    });
+
+    const basic = Vue.extend({
+        template:"#basic"
+    });
+
+    const big = Vue.extend({
+        template:"#big"
+    });
+
+    const java = Vue.extend({
+        template: "#Java"
+    });
+
+    const python = Vue.extend({
+        template: "#Python"
+    });
+
+    // 定义路由
+    const routes = [
+        {   path: '/h5',
+            name: 'h5',
+            component: h5,
+            children: [
+                {path: 'basic',component: basic},
+                {path: 'big',component: big},
+                {path: '/',redirect:'basic'}
+            ]
+        },
+        {path: '/java', component: java , name: 'java'},
+        {path: '/python', component: python, name: 'python'},
+        // 配置根路由
+        {path: '/', redirect:'/h5'}
+    ]
+    //实例化路由
+    const router = new VueRouter({
+        routes
+    });
+
+    new Vue({
+        router
+    }).$mount('#app');
+</script>
+</body>
+</html>
